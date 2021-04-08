@@ -554,6 +554,8 @@ def test_plot_partial_dependence_subsampling(
 @pytest.mark.parametrize(
     "kind, line_kw, label",
     [
+        ("individual", {}, None),
+        ("individual", {"label": "xxx"}, None),
         ("average", {}, None),
         ("average", {"label": "xxx"}, "xxx"),
         ("both", {}, "average"),
@@ -583,4 +585,6 @@ def test_partial_dependence_overwrite_labels(
         if label is None:
             assert ax.get_legend() is None
         else:
-            assert ax.get_legend().get_texts()[0].get_text() == label
+            legend_text = ax.get_legend().get_texts()
+            assert len(legend_text) == 1
+            assert legend_text[0].get_text() == label
